@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>测试平台系统</title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        div#global{
+            width:100%;
+            height:800px;
+            background-color: silver;
+        }
+
+        #heading{
+            width: 100%;
+            height: 100px;
+            background-color: #BB80F7;
+        }
+        #content_menu{
+            width: 20%;
+            height: 700px;
+            background-color: #C5E9F3;
+            /*定义浮动，不定义的话，界面会乱*/
+            float: left;
+        }
+        #content_body{
+            width: 80%;
+            height: 700px;
+            background-color: #F7575d;
+            float: right;
+        }
+        #floor{
+            /*删除浮动，不然会被其他的浮动给遮住*/
+            clear: both;
+            height: 100px;
+            background-color: #8080FF
+        }
+        </style>
+
+</head>
+<body>
+    <h1 style="background-color:cornflowerblue;color:black;">测试平台系统</h1>
+    <h2 style="background-color: cornflowerblue;color:black;">借用系统</h2>
+    <a href = "http://192.168.20.237:8000/phone" target="_blank">手机设备</a>
+    <hr />
+    <a href = "http://192.168.20.237:8000/404" target="_blank">测试卡（还没有做）</a>
+    <h2 style="background-color: cornflowerblue;color:black;">帐号管理</h2>
+    <a href = "http://192.168.20.237:8000/account" target="_blank">帐号系统（还没有做）</a>
+    <hr />
+    <h2 style="background-color: cornflowerblue;color:black;">常用url地址整理</h2>
+    <a href = "http://192.168.20.237:8000/commonurl" target="_blank">地址整理</a>
+    <script src="/static/js/jquery-1.12.4.js"></script>
+</body>
+</html>

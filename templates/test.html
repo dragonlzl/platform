@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+	
+		function duihua()
+			{
+				alert("这个窗口是对话框！")
+			}
+		function queren()
+			{
+				var se=confirm("请选择点击一个按钮!");
+				if (se==true)
+					{
+						alert("你按下的是【确认】");
+					}
+				else
+					{
+						alert("你按下的是【取消】");
+					}
+			}
+		function tishi()
+			{
+				var t=prompt("请输入您的名字","KING视界")
+				if (t!=null && t!="")
+					{
+						document.write("精彩MV就在，" + t + "！属于你的世界")
+					}
+			}
+
+	</script>
+</head>
+<body>
+
+<input type="button" onclick="duihua()" value="点击显示对话框" />
+<input type="button" onclick="queren()" value="点击显示确认框" />
+<input type="button" onclick="tishi()" value="点击显示提示框" />
+
+</body>
+</html>

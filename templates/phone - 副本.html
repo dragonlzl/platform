@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>手机设备</title>
+    <script type="text/javascript">
+        function duihua()
+			{
+				alert("执行成功！");
+			}
+		function queren()
+			{
+				var se=confirm("确定要执行吗？");
+				if (se==true)
+					{
+						alert("执行成功！");
+					    return true;
+					}
+				else
+					{
+						alert("执行取消！");
+						return false;
+					}
+			}
+		function tishi()
+			{
+				var t=prompt("输入你要删除的ID");
+				if (t!=null && t!="")
+					{
+						document.write("删除成功");
+					}
+			}
+    </script>
+</head>
+<body>
+    <h1 style="background-color: antiquewhite;color:black;">手机设备</h1>
+    <form style="text-align:left;"  action="/phone/" method="post">
+        操作系统：<br />
+        <input id="r1" checked type="radio" value="android" name="os_choice">android</input>
+        <input id="r2" type="radio" value="ios" name="os_choice">ios</input><br />
+        手机型号：<br /><input type="text" name="phone_name"/><br />
+        手机版本：<br /><input type="text" name="ver"/><br />
+        持有人：  <br /><input type="text" name="user_name"/><br />
+        借出日期：<br /><input type="text" name="loan_date"/><br />
+        备注：    <br /><input type="text" name="dec_info"/><br />
+        设备ID：  <br /><input type="text" name="phone_id" placeholder="修改和删除需要填写"/><br />
+        <br />
+        <button type="submit" class="btn btn-info" name="all" onclick="duihua()">全部设备</button>
+        <button type="submit" class="btn btn-info" name="add" onclick="duihua()">添加设备</button>
+        <button type="submit" class="btn btn-info" name="change" onclick="return queren()">修改设备信息</button>
+        <button type="submit" class="btn btn-info" name="search" onclick="duihua()">查找设备</button>
+        <button type="submit" class="btn btn-info" name="delete" onclick="return queren()">删除设备</button>
+        <br />
+    </form>
+    <hr />
+    <h1 style="background-color: antiquewhite;color:black;">设备展示</h1>
+    <table border="1" width="800">
+        <thead>
+            <th width="100" height="50">设备id</th>
+            <th width="100" height="50">操作系统</th>
+            <th width="150" height="50">手机型号</th>
+            <th width="100" height="50">手机版本</th>
+            <th width="100" height="50">持有人</th>
+            <th width="100" height="50">借出日期</th>
+            <th width="150" height="50">备注</th>
+        </thead>
+        <tbody>
+            {% for line in data %}
+                    <td style=" text-align:center;" height="25">{{ line.id }}</td>
+                    <td style=" text-align:center;" height="25">{{ line.os }}</td>
+                    <td style=" text-align:center;" height="25">{{ line.phonename }}</td>
+                    <td style=" text-align:center;" height="25">{{ line.version }}</td>
+                    <td style=" text-align:center;" height="25">{{ line.username }}</td>
+                    <td style=" text-align:center;" height="25">{{ line.loandate }}</td>
+                    <td style=" text-align:center;" height="25">{{ line.dec }}</td>
+                </tr>
+            {%  endfor %}
+        </tbody>
+    </table>
+    <script src="/static/js/jquery-1.12.4.js"></script>
+</body>
+</html>

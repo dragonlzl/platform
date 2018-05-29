@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<title>借用系统</title>
+	<meta charset="UTF-8">
+
+	<style type="text/css">
+        a:hover,a:visited{
+            color:#000000;
+        }
+
+        a{
+			text-decoration: none;
+		    }
+		*{
+            margin: 0;
+            padding: 0;
+        }
+
+		div#global{
+            width:100%;
+            height:900px;
+            background-color: aliceblue;
+        }
+
+        #heading{
+            width: 100%;
+            height: 100px;
+            background-color: cornflowerblue;
+			line-height: 100px;   /*height = line-height 垂直居中*/
+        }
+        #content_menu{
+            width: 20%;
+            height: 800px;
+            background-color: #C5E9F3;
+            /*定义浮动，不定义的话，界面会乱*/
+            float: left;
+        }
+        #content_body{
+            width: 80%;
+            height: 800px;
+            background-color: aliceblue;
+            float: right;
+        }
+
+	</style>
+	</head>
+
+<body>
+	<div id="global">
+		<div id="heading">
+            <a href="/index"><h1 style="text-align:center;">借用系统</h1></a>
+        </div>
+		<div id="content_menu">
+			    <form style="text-align:center;"  action="/phone/" method="post">
+                    <br />
+					操作系统：<br />
+					<input id="r1" checked type="radio" value="android" name="os_choice">android</input>
+					<input id="r2" type="radio" value="ios" name="os_choice">ios</input><br />
+					手机型号：<br /><input type="text" name="phone_name"/><br />
+					手机版本：<br /><input type="text" name="ver"/><br />
+					持有人：  <br /><input type="text" name="user_name"/><br />
+					借出日期：<br /><input type="text" name="loan_date"/><br />
+					备注：    <br /><input type="text" name="dec_info"/><br />
+					设备ID：  <br /><input type="text" name="phone_id" placeholder="修改和删除需要填写"/><br />
+					<br />
+					<button type="submit" class="btn btn-info" name="all" onclick="duihua()">全部设备</button>
+					<button type="submit" class="btn btn-info" name="add" onclick="duihua()">添加设备</button>
+					<button type="submit" class="btn btn-info" name="change" onclick="return queren()">修改设备信息</button>
+					<button type="submit" class="btn btn-info" name="search" onclick="duihua()">查找设备</button>
+					<button type="submit" class="btn btn-info" name="delete" onclick="return queren()">删除设备</button>
+					<br />
+				</form>
+
+		</div>
+
+		<div id="content_body" style="margin: 0 auto;" align="center">
+			<span id="spanFirstt">第一页</span> <span id="spanPret">上一页</span> <span id="spanNextt">下一页</span> <span id="spanLastt">最后一页</span> 第<span id="spanPageNumt"></span>页/共<span id="spanTotalPaget"></span>页<br />
+            <hr width="800"/>
+			<table border="0" width="800">
+				<thead>
+					<th width="100" height="50">设备id</th>
+					<th width="100" height="50">操作系统</th>
+					<th width="150" height="50">手机型号</th>
+					<th width="100" height="50">手机版本</th>
+					<th width="100" height="50">持有人</th>
+					<th width="100" height="50">借出日期</th>
+					<th width="300" height="50">备注</th>
+				</thead>
+				<tbody id="tablelsw">
+					{% for line in data %}
+						<td style=" text-align:center;" height="25">{{ line.id }}</td>
+						<td style=" text-align:center;" height="25">{{ line.os }}</td>
+						<td style=" text-align:center;" height="25">{{ line.phonename }}</td>
+						<td style=" text-align:center;" height="25">{{ line.version }}</td>
+						<td style=" text-align:center;" height="25">{{ line.username }}</td>
+						<td style=" text-align:center;" height="25">{{ line.loandate }}</td>
+						<td style=" text-align:center;" height="25">{{ line.dec }}</td>
+						</tr>
+					{%  endfor %}
+				</tbody>
+			</table>
+            <hr width="800"/>
+			<span id="spanFirst">第一页</span>
+			<span id="spanPre">上一页</span>
+			<span id="spanNext">下一页</span>
+			<span id="spanLast">最后一页</span>
+			第<span id="spanPageNum"></span>页/共<span id="spanTotalPage"></span>页
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript">
+    function duihua()
+		{
+			alert("执行成功！");
+		}
+	function queren()
+		{
+			var se=confirm("确定要执行吗？");
+			if (se==true)
+				{
+					alert("执行成功！");
+					return true;
+				}
+			else
+				{
+					alert("执行取消！");
+					return false;
+				}
+		}
+	function tishi()
+		{
+			var t=prompt("输入你要删除的ID");
+			if (t!=null && t!="")
+				{
+					document.write("删除成功");
+				}
+		}
+
+	// JavaScript Document By lishewen
+	var theTable = document.getElementById("tablelsw");
+	var totalPage = document.getElementById("spanTotalPage");
+	var pageNum = document.getElementById("spanPageNum");
+
+	var spanPre = document.getElementById("spanPre");
+	var spanNext = document.getElementById("spanNext");
+	var spanFirst = document.getElementById("spanFirst");
+	var spanLast = document.getElementById("spanLast");
+
+	var totalPaget = document.getElementById("spanTotalPaget");
+	var pageNumt = document.getElementById("spanPageNumt");
+
+	var spanPret = document.getElementById("spanPret");
+	var spanNextt = document.getElementById("spanNextt");
+	var spanFirstt = document.getElementById("spanFirstt");
+	var spanLastt = document.getElementById("spanLastt");
+
+	var numberRowsInTable = theTable.rows.length;
+	var pageSize = 25;
+	var page = 1;
+
+	//下一页
+	function next(){
+
+		hideTable();
+
+		currentRow = pageSize * page;
+		maxRow = currentRow + pageSize;
+		if ( maxRow > numberRowsInTable ) maxRow = numberRowsInTable;
+		for ( var i = currentRow; i< maxRow; i++ ){
+			theTable.rows[i].style.display = '';
+		}
+		page++;
+
+		if ( maxRow == numberRowsInTable ) { nextText(); lastText(); }
+		showPage();
+		preLink();
+		firstLink();
+	}
+
+	//上一页
+	function pre(){
+
+		hideTable();
+
+		page--;
+
+		currentRow = pageSize * page;
+		maxRow = currentRow - pageSize;
+		if ( currentRow > numberRowsInTable ) currentRow = numberRowsInTable;
+		for ( var i = maxRow; i< currentRow; i++ ){
+			theTable.rows[i].style.display = '';
+		}
+
+
+		if ( maxRow == 0 ){ preText(); firstText(); }
+		showPage();
+		nextLink();
+		lastLink();
+	}
+
+	//第一页
+	function first(){
+		hideTable();
+		page = 1;
+		for ( var i = 0; i<pageSize; i++ ){
+			theTable.rows[i].style.display = '';
+		}
+		showPage();
+
+		preText();
+		nextLink();
+		lastLink();
+	}
+
+	//最后一页
+	function last(){
+		hideTable();
+		page = pageCount();
+		currentRow = pageSize * (page - 1);
+		for ( var i = currentRow; i<numberRowsInTable; i++ ){
+			theTable.rows[i].style.display = '';
+		}
+		showPage();
+
+		preLink();
+		nextText();
+		firstLink();
+	}
+
+	function hideTable(){
+		for ( var i = 0; i<numberRowsInTable; i++ ){
+			theTable.rows[i].style.display = 'none';
+		}
+	}
+
+	function showPage(){
+		pageNum.innerHTML = page;
+		pageNumt.innerHTML = page;
+	}
+
+	//总共页数
+	function pageCount(){
+		var count = 0;
+		if ( numberRowsInTable%pageSize != 0 ) count = 1;
+		return parseInt(numberRowsInTable/pageSize) + count;
+	}
+
+	//显示链接
+	function preLink(){ spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; spanPret.innerHTML = "<a href='javascript:pre();'>上一页</a>";}
+	function preText(){ spanPre.innerHTML = "上一页"; spanPret.innerHTML = "上一页"; }
+
+	function nextLink(){ spanNext.innerHTML = "<a href='javascript:next();'>下一页</a>"; spanNextt.innerHTML = "<a href='javascript:next();'>下一页</a>";}
+	function nextText(){ spanNext.innerHTML = "下一页"; spanNextt.innerHTML = "下一页";}
+
+	function firstLink(){ spanFirst.innerHTML = "<a href='javascript:first();'>第一页</a>"; spanFirstt.innerHTML = "<a href='javascript:first();'>第一页</a>";}
+	function firstText(){ spanFirst.innerHTML = "第一页"; spanFirstt.innerHTML = "第一页";}
+
+	function lastLink(){ spanLast.innerHTML = "<a href='javascript:last();'>最后一页</a>"; spanLastt.innerHTML = "<a href='javascript:last();'>最后一页</a>";}
+	function lastText(){ spanLast.innerHTML = "最后一页"; spanLastt.innerHTML = "最后一页";}
+
+	//隐藏表格
+	function hide(){
+		for ( var i = pageSize; i<numberRowsInTable; i++ ){
+			theTable.rows[i].style.display = 'none';
+		}
+
+		totalPage.innerHTML = pageCount();
+		pageNum.innerHTML = '1';
+
+		totalPaget.innerHTML = pageCount();
+		pageNumt.innerHTML = '1';
+
+		nextLink();
+		lastLink();
+	}
+
+	hide();
+</script>
