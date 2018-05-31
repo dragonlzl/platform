@@ -7,16 +7,19 @@
 		function setTab(m,n){
 			var tli=document.getElementById("leftmenu"+m).getElementsByTagName("li");
 			var mli=document.getElementById("mcont"+m).getElementsByTagName("ul");
+			var dli=document.getElementById("leftmenu"+m).getElementsByTagName("div");
 			for(i=0;i<tli.length;i++){
 				tli[i].className=i==n?"hover":"";
 				mli[i].style.display=i==n?"block":"none";
+				dli[i].id=i==n?"click_botten":"click_botten0";
 			}
 		}
 	</script>
 	<style type="text/css">
-        a:hover,a:visited{
+		a:hover,a:visited{
             color:#000000;
         }
+
         a{
 			text-decoration: none;
 		    }
@@ -29,8 +32,11 @@
 			float:left;
 		    }
 		.aa li{
-			padding:15px;
+			height: 200px;
+			line-height: 200px;
+			text-align:center;
 			cursor:pointer;
+            list-style-type:none;
 		    }
 		.bb{
 			width:85%;
@@ -41,6 +47,7 @@
             width:100%;
             height:900px;
             background-color: aliceblue;
+            margin: auto;
             }
 
         #heading{
@@ -62,22 +69,47 @@
             background-color: aliceblue;
             float: right;
         }
+		#click_botten{
+            width: 100%;
+            height: 200px;
+            background-color: aliceblue;
+        }
+		#click_botten0{
+            width: 100%;
+            height: 200px;
+            background-color: #C5E9F3;
+        }
+		#floor{
+            /*删除浮动，不然会被其他的浮动给遮住*/
+            height: 50px;
+			background-color: aliceblue;
+			line-height: 50px;
+        }
 
 	</style>
 	</head>
 
-<body link="#000000" visited="#000000">
+<body link="#000000">
 	<div id="global">
 		<div id="heading">
 			<a href="/index"><h1 style="text-align:center;">测试平台系统</h1></a>
         </div>
+		<hr />
         <div id="content_menu">
             <div class="aa">
                 <ul id="leftmenu0">
-                    <li class="hover" onclick="setTab(0,0)"><h3>借用系统</h3></li>
-                    <li onclick="setTab(0,1)"><h3>账户管理</h3></li>
-                    <li onclick="setTab(0,2)"><h3>常用url地址整理</h3></li>
-                    <li onclick="setTab(0,3)"><h3>预留位置</h3></li>
+					<div id="click_botten">
+						<li class="hover" onclick="setTab(0,0)"><h3>借用系统</h3></li>
+					</div>
+					<div id="demo">
+						<li onclick="setTab(0,1)"><h3>账户管理</h3></li>
+					</div>
+					<div id="demo">
+						<li onclick="setTab(0,2)"><h3>常用url地址</h3></li>
+					</div>
+					<div id="demo">
+						<li onclick="setTab(0,3)"><h3>预留位置</h3></li>
+					</div>
                 </ul>
             </div>
         </div>
@@ -86,12 +118,12 @@
 			<div id="mcont0" class="bb">
 				<ul class="block" style="display: block">
                     <br/>
-					<a href = "http://192.168.20.237:8000/phone" target="_blank"><h3>手机设备</h3></a><br/><br/>
-					<a href = "http://192.168.20.237:8000/404" target="_blank"><h3>测试卡（还没有做）</h3></a><br/><br/>
+					<a href = "http://192.168.20.237:8000/phone" target="_blank"><h4>手机设备</h4></a><br/><br/>
+					<a href = "http://192.168.20.237:8000/404" target="_blank"><h4>测试卡（还没有做）</h4></a><br/><br/>
 				</ul>
 				<ul class="block" style="display: none">
                     <br/>
-					<a href = "http://192.168.20.237:8000/account" target="_blank"><h3>帐号系统（还没有做）<h3></a><br/><br/>
+					<a href = "http://192.168.20.237:8000/account" target="_blank"><h4>帐号系统（还没有做）<h4></a><br/><br/>
 				</ul>
 				<ul class="block" style="display: none">
 					<br />
@@ -101,16 +133,13 @@
 					</tr>
 						<tbody>
 							<tr>
-								<td style=" text-align:center;" height="50"><a href = "https://shimo.im/sheet/9JirDUn1pPI1gnGj" target="_blank">每日工作</a></td>
+								<td style=" text-align:center;" height="50"><a href = "https://shimo.im/sheet/9JirDUn1pPI1gnGj" target="_blank">每日日报</a></td>
 							</tr>
 							<tr>
 								<td style=" text-align:center;" height="50"><a href = "https://shimo.im/sheet/hSHtVdNu6Acl8bIK" target="_blank">手机清单</a></td>
 							</tr>
 							<tr>
 								<td style=" text-align:center;" height="50"><a href = "https://shimo.im/sheet/RYJjUIDIQv8z9WlJ" target="_blank">sim清单</a></td>
-							</tr>
-                            <tr>
-								<td style=" text-align:center;" height="50"><a href = "https://shimo.im/folder/E1abFT5WL9Q6tPg8" target="_blank">石墨文档</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -129,11 +158,14 @@
 					</table>
 				</ul>
 				<ul class="block" style="display: none">
-                    <br/>
+                    <br />
 					<a href = "http://192.168.20.237:8000/404" target="_blank"><h3>敬请期待</h3></a><br/><br/>
 				</ul>
 			</div>
 		</div>
-	</div>
+		<div id="floor">
+			<hr />
+			<p style="text-align:center;">Copyright © 2018-2018测试部</p>
+		</div>
 </body>
 </html>
