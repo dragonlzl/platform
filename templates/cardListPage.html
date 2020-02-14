@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" type="text/css" href="/static/css/cardList.css">
+<script type="text/javascript" src="../static/js/function.js"></script>
+    <div class="expend-table-box" style="margin-top: 0">
+        {% for line in data %}
+            <div id={{line.id}} class="tl-card tl-color-2" *ngFor="let item of listData">
+                <div class="tl-p10">
+                    <div class="tl-title">
+                        <div class="tl-font-16 tl-h32">
+                            <span class="tl-p-left-10">机型：{{line.phonename}}</span>
+                            <button name="send" class="tl-btn-red pull-right" onclick="disp_prompt2()">
+                                通知并借用
+                            </button>
+                        </div>
+                        <div class="tl-font-14 tl-h32">
+                            <span class="tl-p-left-10">{{line.os}}</span>
+                            <span class="tl-p-left-10">{{line.version}}</span>
+                        </div>
+                        <div class="tl-font-14 tl-h32">
+                            <span class="tl-p-left-10">{{line.dec}}</span>
+                        </div>
+                        <div class="tl-font-14 tl-h32">
+                            <span id="name" class="tl-p-left-10">当前使用者：{{ line.username }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%  endfor %}
+        <div class="clearfix"></div>
+    </div>
+</html>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from cmdb import models
 from django.shortcuts import HttpResponse
+import json
 
 # Create your views here.
 
@@ -10,15 +11,38 @@ from django.shortcuts import HttpResponse
 # ]
 #phonelist = [{"phone":"vivo","username":"test1","ver":"6.1","loan_date":"2018.5.15"}]
 
+
 def index(request):
     #return HttpResponse("hello world!")
     return render(request,"index.html")
 
+
+def test(request):
+    #return HttpResponse("hello world!")
+    return render(request,"cardpage.html")
+
+
+def test2(request):
+    phonelist = models.PhoneInfo.objects.all()
+
+    #json_receive = json.loads(request.body)
+    print("request.body = ", request.body)
+    name = request.POST
+    # name = json_receive['name']
+    print("name = ", name)
+    phone_id = "81"
+    #models.PhoneInfo.objects.filter(id=phone_id).update(username=name)
+    #return render(request,"cardListPage.html")
+    return render(request, "cardListPage.html", {"data": phonelist})
+
+
 def urlpage(request):
     return render(request, "commonurl.html")
 
+
 def errpage(request):
     return render(request, "404.html")
+
 
 def account(request):
     if request.method == "POST":
@@ -30,6 +54,7 @@ def account(request):
         #     user_list.append({"user":username,"pwd":password})
     user_list = models.UserInfo.objects.all()
     return render(request,"account.html",{"data":user_list})
+
 
 def phone(request):
     phonelist = models.PhoneInfo.objects.all()
@@ -346,17 +371,39 @@ def phone(request):
 
         # 删除设备
         if 'delete' in request.POST:
+            phones_id_list = []
+            if 'list ' in phone_id:
+                phones_id_list = phone_id.split(' ')
+                phones_id_list.remove('list')
+                if '' in phones_id_list:
+                    phones_id_list.remove('')
+                print(phones_id_list)
+            else:
+                phones_id_list.append(phone_id)
             try:
-                data = models.PhoneInfo.objects.filter(id=phone_id)
-                print(data)
-                print(len(data))
-                if len(data) == 1:
-                    data.delete()
-                    #return HttpResponse("设备删除成功")
-                else:
-                    return HttpResponse("该设备不存在")
+                for id in phones_id_list:
+                    data = models.PhoneInfo.objects.filter(id=id)
+                    print(data)
+                    print(len(data))
+                    if len(data) == 1:
+                        data.delete()
+                    else:
+                        return HttpResponse("该设备不存在，或者列表格式有误“list 1 2 3 4”")
             except:
-                return HttpResponse("ID不能为空")
+                return HttpResponse("ID不能为空,或者列表格式有误“list 1 2 3 4”")
+
+            # try:
+            #     data = models.PhoneInfo.objects.filter(id=phone_id)
+            #     print(data)
+            #     print(len(data))
+            #     if len(data) == 1:
+            #         data.delete()
+            #         #return HttpResponse("设备删除成功")
+            #     else:
+            #         return HttpResponse("该设备不存在")
+            # except:
+            #     return HttpResponse("ID不能为空")
+
             # try:
             #     data = models.PhoneInfo.objects.filter(id=phone_id)
             #     print(len(data))

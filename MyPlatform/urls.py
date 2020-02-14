@@ -22,6 +22,8 @@ from . import testdb,phonedb
 urlpatterns = [
     #path('admin/', admin.site.urls),
     url(r'^index/',views.index),
+    url(r'^test/',views.test),
+    url(r'^test2/',views.test2),
     url(r'^404/',views.errpage),
     url(r'^account/', views.account),
     url(r'^phone/', views.phone),
